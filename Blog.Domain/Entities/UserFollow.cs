@@ -1,8 +1,4 @@
 namespace Blog.Domain.Entities;
-
-/// <summary>
-/// User Follow Junction Table - Many-to-Many User takip sistemi
-/// </summary>
 public class UserFollow
 {
     public string FollowerId { get; set; } = string.Empty;

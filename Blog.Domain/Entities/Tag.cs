@@ -2,9 +2,6 @@ using Blog.Domain.Common;
 
 namespace Blog.Domain.Entities;
 
-/// <summary>
-/// Etiket entity'si - Medium benzeri tag sistemi
-/// </summary>
 public class Tag : BaseEntity
 {
     public string Name { get; set; } = string.Empty;

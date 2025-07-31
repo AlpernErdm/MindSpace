@@ -2,9 +2,6 @@ using Blog.Domain.Common;
 
 namespace Blog.Domain.Entities;
 
-/// <summary>
-/// Bildirim entity'si - Medium benzeri notification sistemi
-/// </summary>
 public class Notification : BaseEntity
 {
     public string Title { get; set; } = string.Empty;
@@ -13,11 +10,8 @@ public class Notification : BaseEntity
     public bool IsRead { get; set; } = false;
     public DateTime? ReadAt { get; set; }
     
-    // İlgili içerik bilgileri
     public string? ActionUrl { get; set; } // Notification'a tıklayınca gidilecek URL
     public string? ActionData { get; set; } // JSON formatında ek data
-    
-    // Foreign Keys
     public string UserId { get; set; } = string.Empty; // Bildirimi alacak kullanıcı
     public string? ActorId { get; set; } // Bildirimi tetikleyen kullanıcı
     public Guid? PostId { get; set; }

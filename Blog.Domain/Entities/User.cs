@@ -1,11 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
 namespace Blog.Domain.Entities;
-
-/// <summary>
-/// Kullanıcı entity'si - ASP.NET Identity ile entegre
-/// Medium benzeri kullanıcı profil bilgileri içerir
-/// </summary>
 public class User : IdentityUser
 {
     // Profil bilgileri

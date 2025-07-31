@@ -2,9 +2,6 @@ using Blog.Domain.Common;
 
 namespace Blog.Domain.Entities;
 
-/// <summary>
-/// Blog yazısı entity'si - Medium benzeri makale yapısı
-/// </summary>
 public class Post : BaseEntity
 {
     public string Title { get; set; } = string.Empty;
@@ -13,7 +10,6 @@ public class Post : BaseEntity
     public string? Excerpt { get; set; } // Kısa özet
     public string? FeaturedImageUrl { get; set; }
     
-    // Yayın durumu
     public PostStatus Status { get; set; } = PostStatus.Draft;
     public DateTime? PublishedAt { get; set; }
     

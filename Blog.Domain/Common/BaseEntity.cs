@@ -1,9 +1,4 @@
 namespace Blog.Domain.Common;
-
-/// <summary>
-/// Tüm entity'lerin miras alacağı base sınıf
-/// Id, CreatedAt, UpdatedAt gibi ortak alanları içerir
-/// </summary>
 public abstract class BaseEntity
 {
     public Guid Id { get; set; } = Guid.NewGuid();
