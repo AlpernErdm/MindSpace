@@ -5,9 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.API.Controllers;
 
-/// <summary>
-/// Authentication Controller - Register, Login, RefreshToken
-/// </summary>
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
@@ -21,12 +18,6 @@ public class AuthController : ControllerBase
         _authService = authService;
         _logger = logger;
     }
-
-    /// <summary>
-    /// Kullanıcı kaydı
-    /// </summary>
-    /// <param name="request">Kayıt bilgileri</param>
-    /// <returns>Authentication response</returns>
     [HttpPost("register")]
     [ProducesResponseType(typeof(AuthResponse), 200)]
     [ProducesResponseType(typeof(AuthResponse), 400)]
@@ -72,12 +63,6 @@ public class AuthController : ControllerBase
             });
         }
     }
-
-    /// <summary>
-    /// Kullanıcı girişi
-    /// </summary>
-    /// <param name="request">Giriş bilgileri</param>
-    /// <returns>Authentication response</returns>
     [HttpPost("login")]
     [ProducesResponseType(typeof(AuthResponse), 200)]
     [ProducesResponseType(typeof(AuthResponse), 400)]
@@ -124,13 +109,6 @@ public class AuthController : ControllerBase
             });
         }
     }
-
-    /// <summary>
-    /// Token yenileme
-    /// </summary>
-    /// <param name="token">Eski token</param>
-    /// <param name="refreshToken">Refresh token</param>
-    /// <returns>Yeni token</returns>
     [HttpPost("refresh-token")]
     [ProducesResponseType(typeof(AuthResponse), 200)]
     [ProducesResponseType(typeof(AuthResponse), 400)]
@@ -172,10 +150,6 @@ public class AuthController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Kullanıcı çıkışı
-    /// </summary>
-    /// <returns>Başarı durumu</returns>
     [HttpPost("logout")]
     [Authorize]
     [ProducesResponseType(typeof(object), 200)]
@@ -201,10 +175,6 @@ public class AuthController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Mevcut kullanıcı bilgilerini getir
-    /// </summary>
-    /// <returns>Kullanıcı bilgileri</returns>
     [HttpGet("me")]
     [Authorize]
     [ProducesResponseType(typeof(UserDto), 200)]
@@ -219,8 +189,6 @@ public class AuthController : ControllerBase
             {
                 return Unauthorized();
             }
-
-            // Veritabanından kullanıcı bilgilerini çek
             var user = await _authService.GetCurrentUserAsync(userId);
             
             if (user == null)

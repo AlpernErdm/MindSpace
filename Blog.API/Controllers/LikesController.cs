@@ -7,9 +7,6 @@ using System.Security.Claims;
 
 namespace Blog.API.Controllers;
 
-/// <summary>
-/// Likes Controller - Post ve Comment beğeni işlemleri
-/// </summary>
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
@@ -29,10 +26,6 @@ public class LikesController : ControllerBase
         _notificationService = notificationService;
         _logger = logger;
     }
-
-    /// <summary>
-    /// Post beğen/beğenme
-    /// </summary>
     [HttpPost("posts/{postId}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(401)]
@@ -54,12 +47,10 @@ public class LikesController : ControllerBase
 
             if (existingLike.Any())
             {
-                // Unlike
                 var like = existingLike.First();
                 _unitOfWork.Likes.Remove(like);
                 await _unitOfWork.SaveChangesAsync();
-                
-                // Update post like count
+
                 await _unitOfWork.Posts.UpdateLikeCountAsync(postId);
                 await _unitOfWork.SaveChangesAsync();
 
@@ -73,7 +64,6 @@ public class LikesController : ControllerBase
             }
             else
             {
-                // Like
                 var like = new Like
                 {
                     UserId = userId,
@@ -84,11 +74,9 @@ public class LikesController : ControllerBase
                 await _unitOfWork.Likes.AddAsync(like);
                 await _unitOfWork.SaveChangesAsync();
 
-                // Update post like count
                 await _unitOfWork.Posts.UpdateLikeCountAsync(postId);
                 await _unitOfWork.SaveChangesAsync();
 
-                // Send notification if not liking own post
                 if (post.AuthorId != userId)
                 {
                     await _notificationService.SendPostLikedNotificationAsync(postId, userId, post.AuthorId);
@@ -110,9 +98,6 @@ public class LikesController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Comment beğen/beğenme
-    /// </summary>
     [HttpPost("comments/{commentId}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(401)]
@@ -134,12 +119,10 @@ public class LikesController : ControllerBase
 
             if (existingLike.Any())
             {
-                // Unlike
                 var like = existingLike.First();
                 _unitOfWork.Likes.Remove(like);
                 await _unitOfWork.SaveChangesAsync();
 
-                // Update comment like count
                 comment.LikeCount = Math.Max(0, comment.LikeCount - 1);
                 _unitOfWork.Comments.Update(comment);
                 await _unitOfWork.SaveChangesAsync();
@@ -154,7 +137,6 @@ public class LikesController : ControllerBase
             }
             else
             {
-                // Like
                 var like = new Like
                 {
                     UserId = userId,
@@ -165,7 +147,6 @@ public class LikesController : ControllerBase
                 await _unitOfWork.Likes.AddAsync(like);
                 await _unitOfWork.SaveChangesAsync();
 
-                // Update comment like count
                 comment.LikeCount++;
                 _unitOfWork.Comments.Update(comment);
                 await _unitOfWork.SaveChangesAsync();
@@ -186,9 +167,6 @@ public class LikesController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Kullanıcının post beğeni durumunu kontrol et
-    /// </summary>
     [HttpGet("posts/{postId}/status")]
     [ProducesResponseType(200)]
     [ProducesResponseType(401)]
@@ -212,9 +190,6 @@ public class LikesController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Kullanıcının comment beğeni durumunu kontrol et
-    /// </summary>
     [HttpGet("comments/{commentId}/status")]
     [ProducesResponseType(200)]
     [ProducesResponseType(401)]

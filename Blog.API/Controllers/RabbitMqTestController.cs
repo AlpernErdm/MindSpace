@@ -6,9 +6,7 @@ using System.Security.Claims;
 
 namespace Blog.API.Controllers;
 
-/// <summary>
-/// RabbitMQ Test Controller - Message queue test endpoints (Admin only)
-/// </summary>
+
 [ApiController]
 [Route("api/[controller]")]
 [Authorize(Roles = "Admin")]
@@ -26,9 +24,6 @@ public class RabbitMqTestController : ControllerBase
         _logger = logger;
     }
 
-    /// <summary>
-    /// Test post liked message
-    /// </summary>
     [HttpPost("test-post-liked")]
     [ProducesResponseType(200)]
     [ProducesResponseType(401)]
@@ -68,9 +63,6 @@ public class RabbitMqTestController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Test new comment message
-    /// </summary>
     [HttpPost("test-new-comment")]
     [ProducesResponseType(200)]
     [ProducesResponseType(401)]
@@ -112,9 +104,6 @@ public class RabbitMqTestController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Test email message
-    /// </summary>
     [HttpPost("test-email")]
     [ProducesResponseType(200)]
     [ProducesResponseType(401)]
@@ -152,9 +141,6 @@ public class RabbitMqTestController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Test post published message
-    /// </summary>
     [HttpPost("test-post-published")]
     [ProducesResponseType(200)]
     [ProducesResponseType(401)]
@@ -197,9 +183,6 @@ public class RabbitMqTestController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Test bulk messages
-    /// </summary>
     [HttpPost("test-bulk-messages")]
     [ProducesResponseType(200)]
     [ProducesResponseType(401)]

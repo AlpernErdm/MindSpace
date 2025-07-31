@@ -5,9 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.API.Controllers;
 
-/// <summary>
-/// Search Controller - Advanced search with Elasticsearch
-/// </summary>
+
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
@@ -24,9 +22,6 @@ public class SearchController : ControllerBase
         _logger = logger;
     }
 
-    /// <summary>
-    /// Advanced search with filters and facets
-    /// </summary>
     [HttpPost("posts")]
     [ProducesResponseType(typeof(SearchResponse), 200)]
     [ProducesResponseType(400)]
@@ -40,7 +35,6 @@ public class SearchController : ControllerBase
                 return BadRequest(new { Message = "Search request cannot be null" });
             }
 
-            // Validate request
             if (request.Page < 1)
                 request.Page = 1;
 
@@ -58,9 +52,6 @@ public class SearchController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Simple text search (for quick search bar)
-    /// </summary>
     [HttpGet("quick")]
     [ProducesResponseType(typeof(SearchResponse), 200)]
     [ProducesResponseType(400)]
@@ -103,9 +94,6 @@ public class SearchController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Get search suggestions for auto-complete
-    /// </summary>
     [HttpGet("suggestions")]
     [ProducesResponseType(typeof(List<SearchSuggestion>), 200)]
     public async Task<IActionResult> GetSuggestions(
@@ -125,13 +113,10 @@ public class SearchController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error getting search suggestions");
-            return Ok(new List<SearchSuggestion>()); // Return empty list on error
+            return Ok(new List<SearchSuggestion>());
         }
     }
 
-    /// <summary>
-    /// Get similar posts
-    /// </summary>
     [HttpGet("similar/{postId:guid}")]
     [ProducesResponseType(typeof(List<PostSearchResult>), 200)]
     [ProducesResponseType(404)]
@@ -151,9 +136,6 @@ public class SearchController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Get popular search terms
-    /// </summary>
     [HttpGet("popular")]
     [ProducesResponseType(typeof(List<PopularSearch>), 200)]
     public async Task<IActionResult> GetPopularSearches([FromQuery] int maxResults = 10)
@@ -170,9 +152,6 @@ public class SearchController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Search health check and statistics
-    /// </summary>
     [HttpGet("health")]
     [ProducesResponseType(200)]
     [ProducesResponseType(503)]
@@ -206,9 +185,6 @@ public class SearchController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Re-index all posts (Admin only)
-    /// </summary>
     [HttpPost("reindex")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(200)]
@@ -234,9 +210,6 @@ public class SearchController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Add test data to search index (Admin only)
-    /// </summary>
     [HttpPost("test-data")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(200)]

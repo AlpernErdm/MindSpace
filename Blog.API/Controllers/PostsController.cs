@@ -6,9 +6,6 @@ using System.Security.Claims;
 
 namespace Blog.API.Controllers;
 
-/// <summary>
-/// Post yönetimi için API endpoints
-/// </summary>
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
@@ -23,9 +20,6 @@ public class PostsController : ControllerBase
         _logger = logger;
     }
 
-    /// <summary>
-    /// Yeni post oluştur (Author veya Admin gerekli)
-    /// </summary>
     [HttpPost]
     [Authorize(Roles = "Author,Admin")]
     [ProducesResponseType(typeof(PostResponse), 201)]
@@ -60,9 +54,6 @@ public class PostsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Post güncelle (Sadece post sahibi veya Admin)
-    /// </summary>
     [HttpPut("{id}")]
     [Authorize(Roles = "Author,Admin")]
     [ProducesResponseType(typeof(PostResponse), 200)]
@@ -84,8 +75,6 @@ public class PostsController : ControllerBase
             {
                 return Unauthorized("Kullanıcı kimliği bulunamadı");
             }
-
-            // Post'un sahibi mi yoksa Admin mi kontrol et
             var existingPost = await _postService.GetPostByIdAsync(id);
             if (existingPost == null)
             {
@@ -114,9 +103,6 @@ public class PostsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Post sil (Sadece post sahibi veya Admin)
-    /// </summary>
     [HttpDelete("{id}")]
     [Authorize(Roles = "Author,Admin")]
     [ProducesResponseType(204)]
@@ -132,8 +118,6 @@ public class PostsController : ControllerBase
             {
                 return Unauthorized("Kullanıcı kimliği bulunamadı");
             }
-
-            // Post'un sahibi mi yoksa Admin mi kontrol et
             var existingPost = await _postService.GetPostByIdAsync(id);
             if (existingPost == null)
             {
@@ -161,10 +145,6 @@ public class PostsController : ControllerBase
             return StatusCode(500, new { Error = "Post silinirken hata oluştu" });
         }
     }
-
-    /// <summary>
-    /// Post detayı getir (ID ile)
-    /// </summary>
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(PostResponse), 200)]
     [ProducesResponseType(404)]
@@ -188,9 +168,6 @@ public class PostsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Post detayı getir (Slug ile) - View count artırır
-    /// </summary>
     [HttpGet("slug/{slug}")]
     [ProducesResponseType(typeof(PostResponse), 200)]
     [ProducesResponseType(404)]
@@ -214,9 +191,6 @@ public class PostsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Yayınlanmış postları listele (sayfalı)
-    /// </summary>
     [HttpGet]
     [ProducesResponseType(typeof(PagedResult<PostResponse>), 200)]
     public async Task<IActionResult> GetPublishedPosts([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
@@ -237,9 +211,6 @@ public class PostsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Kullanıcının kendi postları (Authentication gerekli)
-    /// </summary>
     [HttpGet("my-posts")]
     [Authorize]
     [ProducesResponseType(typeof(PagedResult<PostResponse>), 200)]
@@ -268,9 +239,6 @@ public class PostsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Kategoriye göre postlar (ID ile)
-    /// </summary>
     [HttpGet("category/{categoryId:guid}")]
     [ProducesResponseType(typeof(PagedResult<PostResponse>), 200)]
     public async Task<IActionResult> GetPostsByCategory(Guid categoryId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
@@ -291,9 +259,6 @@ public class PostsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Kategoriye göre postlar (Slug ile)
-    /// </summary>
     [HttpGet("category/slug/{categorySlug}")]
     [ProducesResponseType(typeof(PagedResult<PostResponse>), 200)]
     public async Task<IActionResult> GetPostsByCategorySlug(string categorySlug, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
@@ -314,9 +279,6 @@ public class PostsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Tag'e göre postlar
-    /// </summary>
     [HttpGet("tag/{tagSlug}")]
     [ProducesResponseType(typeof(PagedResult<PostResponse>), 200)]
     public async Task<IActionResult> GetPostsByTag(string tagSlug, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
@@ -337,9 +299,6 @@ public class PostsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Post arama
-    /// </summary>
     [HttpGet("search")]
     [ProducesResponseType(typeof(PagedResult<PostResponse>), 200)]
     public async Task<IActionResult> SearchPosts([FromQuery] string query, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
@@ -365,9 +324,6 @@ public class PostsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Post yayınla (Sadece post sahibi veya Admin)
-    /// </summary>
     [HttpPost("{id}/publish")]
     [Authorize(Roles = "Author,Admin")]
     [ProducesResponseType(typeof(PostResponse), 200)]
@@ -384,7 +340,6 @@ public class PostsController : ControllerBase
                 return Unauthorized("Kullanıcı kimliği bulunamadı");
             }
 
-            // Post'un sahibi mi yoksa Admin mi kontrol et
             var existingPost = await _postService.GetPostByIdAsync(id);
             if (existingPost == null)
             {
@@ -413,9 +368,6 @@ public class PostsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Post yayından kaldır (Sadece post sahibi veya Admin)
-    /// </summary>
     [HttpPost("{id}/unpublish")]
     [Authorize(Roles = "Author,Admin")]
     [ProducesResponseType(typeof(PostResponse), 200)]
@@ -432,7 +384,6 @@ public class PostsController : ControllerBase
                 return Unauthorized("Kullanıcı kimliği bulunamadı");
             }
 
-            // Post'un sahibi mi yoksa Admin mi kontrol et
             var existingPost = await _postService.GetPostByIdAsync(id);
             if (existingPost == null)
             {

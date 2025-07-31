@@ -7,9 +7,6 @@ using System.Security.Claims;
 
 namespace Blog.API.Controllers;
 
-/// <summary>
-/// Users Controller - Kullanıcı profil işlemleri
-/// </summary>
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
@@ -29,9 +26,6 @@ public class UsersController : ControllerBase
         _logger = logger;
     }
 
-    /// <summary>
-    /// Kullanıcı profilini getir
-    /// </summary>
     [HttpGet("{userName}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
@@ -43,7 +37,6 @@ public class UsersController : ControllerBase
             if (user == null)
                 return NotFound("Kullanıcı bulunamadı");
 
-            // Kullanıcının son postlarını getir
             var recentPosts = await _unitOfWork.Posts.FindAsync(p => 
                 p.AuthorId == user.Id && p.Status == PostStatus.Published);
             var recentPostsList = recentPosts
@@ -96,9 +89,6 @@ public class UsersController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Kullanıcıyı takip et/takibi bırak
-    /// </summary>
     [HttpPost("{userName}/follow")]
     [Authorize]
     [ProducesResponseType(200)]
@@ -160,10 +150,6 @@ public class UsersController : ControllerBase
             return StatusCode(500, new { Error = "Takip işlemi sırasında hata oluştu" });
         }
     }
-
-    /// <summary>
-    /// Kullanıcının takipçilerini getir
-    /// </summary>
     [HttpGet("{userName}/followers")]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
@@ -211,9 +197,6 @@ public class UsersController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Kullanıcının takip ettiklerini getir
-    /// </summary>
     [HttpGet("{userName}/following")]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
@@ -260,10 +243,6 @@ public class UsersController : ControllerBase
             return StatusCode(500, new { Error = "Takip edilenler getirilirken hata oluştu" });
         }
     }
-
-    /// <summary>
-    /// Kullanıcının postlarını getir
-    /// </summary>
     [HttpGet("{userName}/posts")]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]

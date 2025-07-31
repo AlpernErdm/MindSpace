@@ -4,9 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blog.API.Controllers;
 
-/// <summary>
-/// Tags Controller - Etiket yönetimi
-/// </summary>
+
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
@@ -21,9 +19,6 @@ public class TagsController : ControllerBase
         _logger = logger;
     }
 
-    /// <summary>
-    /// Tüm etiketleri getir
-    /// </summary>
     [HttpGet]
     [ProducesResponseType(200)]
     public async Task<IActionResult> GetTags()
@@ -52,9 +47,6 @@ public class TagsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Etiket detayını getir
-    /// </summary>
     [HttpGet("{id:guid}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
@@ -86,9 +78,6 @@ public class TagsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Slug ile etiket getir
-    /// </summary>
     [HttpGet("slug/{slug}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
@@ -126,9 +115,6 @@ public class TagsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Popüler etiketleri getir
-    /// </summary>
     [HttpGet("popular")]
     [ProducesResponseType(200)]
     public async Task<IActionResult> GetPopularTags([FromQuery] int count = 10)

@@ -8,9 +8,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blog.API.Controllers;
 
-/// <summary>
-/// Test Controller - Comprehensive system testing with seed data
-/// </summary>
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
@@ -39,9 +36,6 @@ public class TestController : ControllerBase
         _logger = logger;
     }
 
-    /// <summary>
-    /// Get system overview with data counts
-    /// </summary>
     [HttpGet("overview")]
     [ProducesResponseType(200)]
     public async Task<IActionResult> GetSystemOverview()
@@ -78,9 +72,6 @@ public class TestController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Get all users with their roles and stats
-    /// </summary>
     [HttpGet("users")]
     [ProducesResponseType(200)]
     public async Task<IActionResult> GetUsersWithStats()
@@ -126,9 +117,6 @@ public class TestController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Get posts with full details including likes and comments
-    /// </summary>
     [HttpGet("posts")]
     [ProducesResponseType(200)]
     public async Task<IActionResult> GetPostsWithDetails([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
@@ -186,9 +174,6 @@ public class TestController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Get comments with replies hierarchy
-    /// </summary>
     [HttpGet("comments")]
     [ProducesResponseType(200)]
     public async Task<IActionResult> GetCommentsHierarchy([FromQuery] Guid? postId = null)
@@ -204,8 +189,6 @@ public class TestController : ControllerBase
 
             var comments = await query.Take(50).ToListAsync();
             var commentDetails = new List<object>();
-
-            // Get root comments first
             var rootComments = comments.Where(c => c.ParentCommentId == null).ToList();
 
             foreach (var comment in rootComments)
@@ -213,8 +196,6 @@ public class TestController : ControllerBase
                 var author = await _userManager.FindByIdAsync(comment.AuthorId);
                 var post = await _unitOfWork.Posts.GetByIdAsync(comment.PostId);
                 var likeCount = await _unitOfWork.Likes.CountAsync(l => l.CommentId == comment.Id);
-                
-                // Get replies
                 var replies = comments.Where(c => c.ParentCommentId == comment.Id).ToList();
                 var replyDetails = new List<object>();
 
@@ -261,10 +242,6 @@ public class TestController : ControllerBase
             return StatusCode(500, new { Error = "Failed to get comments" });
         }
     }
-
-    /// <summary>
-    /// Get user follow relationships
-    /// </summary>
     [HttpGet("follows")]
     [ProducesResponseType(200)]
     public async Task<IActionResult> GetFollowRelationships()
@@ -304,9 +281,6 @@ public class TestController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Test notification system with real data
-    /// </summary>
     [HttpPost("test-notifications")]
     [Authorize]
     [ProducesResponseType(200)]
@@ -365,9 +339,6 @@ public class TestController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Test Elasticsearch search with seed data
-    /// </summary>
     [HttpPost("test-search")]
     [ProducesResponseType(200)]
     public async Task<IActionResult> TestElasticsearchSearch()
@@ -404,8 +375,6 @@ public class TestController : ControllerBase
                     }).ToList()
                 });
             }
-
-            // Test suggestions
             var suggestions = await _elasticsearchService.GetSuggestionsAsync("react", 5);
 
             return Ok(new
@@ -422,10 +391,6 @@ public class TestController : ControllerBase
             return StatusCode(500, new { Error = "Search test failed" });
         }
     }
-
-    /// <summary>
-    /// Seed database with test data
-    /// </summary>
     [HttpPost("seed-data")]
     [ProducesResponseType(200)]
     public async Task<IActionResult> SeedTestData()

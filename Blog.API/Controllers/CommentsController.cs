@@ -7,9 +7,6 @@ using System.Security.Claims;
 
 namespace Blog.API.Controllers;
 
-/// <summary>
-/// Comments Controller - Yorum işlemleri
-/// </summary>
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
@@ -29,9 +26,6 @@ public class CommentsController : ControllerBase
         _logger = logger;
     }
 
-    /// <summary>
-    /// Post'un yorumlarını getir
-    /// </summary>
     [HttpGet("posts/{postId}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
@@ -45,8 +39,6 @@ public class CommentsController : ControllerBase
 
             var comments = await _unitOfWork.Comments.FindAsync(c => c.PostId == postId);
             var rootComments = comments.Where(c => c.ParentCommentId == null).ToList();
-
-            // Pagination
             var totalCount = rootComments.Count;
             var pagedComments = rootComments
                 .OrderByDescending(c => c.CreatedAt)
@@ -117,9 +109,6 @@ public class CommentsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Yeni yorum oluştur
-    /// </summary>
     [HttpPost]
     [Authorize]
     [ProducesResponseType(201)]
@@ -160,11 +149,9 @@ public class CommentsController : ControllerBase
             await _unitOfWork.Comments.AddAsync(comment);
             await _unitOfWork.SaveChangesAsync();
 
-            // Update post comment count
             await _unitOfWork.Posts.UpdateCommentCountAsync(request.PostId);
             await _unitOfWork.SaveChangesAsync();
 
-            // Send notification if not commenting on own post
             if (post.AuthorId != userId)
             {
                 await _notificationService.SendNewCommentNotificationAsync(
@@ -199,9 +186,6 @@ public class CommentsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Yorum güncelle
-    /// </summary>
     [HttpPut("{id}")]
     [Authorize]
     [ProducesResponseType(200)]
@@ -224,7 +208,6 @@ public class CommentsController : ControllerBase
             if (comment == null)
                 return NotFound("Yorum bulunamadı");
 
-            // Sadece yorum sahibi güncelleyebilir
             if (comment.AuthorId != userId)
                 return Forbid("Sadece yorum sahibi bu işlemi yapabilir");
 
@@ -245,9 +228,6 @@ public class CommentsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Yorum sil
-    /// </summary>
     [HttpDelete("{id}")]
     [Authorize]
     [ProducesResponseType(200)]
@@ -266,14 +246,12 @@ public class CommentsController : ControllerBase
             if (comment == null)
                 return NotFound("Yorum bulunamadı");
 
-            // Sadece yorum sahibi silebilir
             if (comment.AuthorId != userId)
                 return Forbid("Sadece yorum sahibi bu işlemi yapabilir");
 
             _unitOfWork.Comments.Remove(comment);
             await _unitOfWork.SaveChangesAsync();
 
-            // Update post comment count
             await _unitOfWork.Posts.UpdateCommentCountAsync(comment.PostId);
             await _unitOfWork.SaveChangesAsync();
 
@@ -288,9 +266,6 @@ public class CommentsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Yorum detayını getir
-    /// </summary>
     [HttpGet("{id}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
@@ -340,9 +315,6 @@ public class CommentsController : ControllerBase
     #endregion
 }
 
-/// <summary>
-/// Yorum oluşturma request modeli
-/// </summary>
 public class CreateCommentRequest
 {
     public string Content { get; set; } = string.Empty;
@@ -350,9 +322,6 @@ public class CreateCommentRequest
     public Guid? ParentCommentId { get; set; }
 }
 
-/// <summary>
-/// Yorum güncelleme request modeli
-/// </summary>
 public class UpdateCommentRequest
 {
     public string Content { get; set; } = string.Empty;

@@ -5,9 +5,6 @@ using System.Security.Claims;
 
 namespace Blog.API.Controllers;
 
-/// <summary>
-/// Notification endpoints - Real-time bildirimler
-/// </summary>
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
@@ -25,9 +22,6 @@ public class NotificationsController : ControllerBase
         _logger = logger;
     }
 
-    /// <summary>
-    /// Kullanıcının bildirimlerini getir (sayfalı)
-    /// </summary>
     [HttpGet]
     [ProducesResponseType(200)]
     [ProducesResponseType(401)]
@@ -72,9 +66,6 @@ public class NotificationsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Okunmamış bildirim sayısını getir
-    /// </summary>
     [HttpGet("unread-count")]
     [ProducesResponseType(typeof(int), 200)]
     [ProducesResponseType(401)]
@@ -95,10 +86,6 @@ public class NotificationsController : ControllerBase
             return StatusCode(500, new { Message = "Okunmamış bildirim sayısı alınırken hata oluştu" });
         }
     }
-
-    /// <summary>
-    /// Bildirimi okundu olarak işaretle
-    /// </summary>
     [HttpPut("{id}/mark-read")]
     [ProducesResponseType(200)]
     [ProducesResponseType(401)]
@@ -121,9 +108,6 @@ public class NotificationsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Tüm bildirimleri okundu olarak işaretle
-    /// </summary>
     [HttpPut("mark-all-read")]
     [ProducesResponseType(200)]
     [ProducesResponseType(401)]
@@ -145,9 +129,6 @@ public class NotificationsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Bildirimi sil
-    /// </summary>
     [HttpDelete("{id}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(401)]
@@ -173,9 +154,6 @@ public class NotificationsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Test için örnek bildirim oluştur
-    /// </summary>
     [HttpPost("test")]
     [ProducesResponseType(200)]
     [ProducesResponseType(401)]
