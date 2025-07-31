@@ -2,9 +2,6 @@ using Blog.Domain.Entities;
 
 namespace Blog.Infrastructure.Data.SeedData;
 
-/// <summary>
-/// Tag seed data - Her tag kategorisi için 5 detaylı seed data
-/// </summary>
 public static class TagSeedData
 {
     public static readonly Tag[] Tags = new[]

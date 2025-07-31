@@ -4,10 +4,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Blog.Infrastructure.Data.Configurations;
 
-/// <summary>
-/// PostTag junction table için EF Core configuration
-/// Post-Tag many-to-many ilişkisi
-/// </summary>
 public class PostTagConfiguration : IEntityTypeConfiguration<PostTag>
 {
     public void Configure(EntityTypeBuilder<PostTag> builder)

@@ -4,9 +4,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Blog.Infrastructure.Data.Configurations;
 
-/// <summary>
-/// Notification entity için EF Core configuration
-/// </summary>
 public class NotificationConfiguration : IEntityTypeConfiguration<Notification>
 {
     public void Configure(EntityTypeBuilder<Notification> builder)

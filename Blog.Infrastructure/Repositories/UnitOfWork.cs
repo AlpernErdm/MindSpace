@@ -6,9 +6,6 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Blog.Infrastructure.Repositories;
 
-/// <summary>
-/// Unit of Work Implementation - Repository koordinasyonu ve transaction management
-/// </summary>
 public class UnitOfWork : IUnitOfWork
 {
     private readonly BlogDbContext _context;

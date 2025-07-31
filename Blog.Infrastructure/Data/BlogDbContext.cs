@@ -3,18 +3,12 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Infrastructure.Data;
-
-/// <summary>
-/// Ana database context - ASP.NET Identity ile entegre
-/// Medium klonu için tüm entity'leri içerir
-/// </summary>
 public class BlogDbContext : IdentityDbContext<User>
 {
     public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
     {
     }
 
-    // Entity DbSets
     public DbSet<Post> Posts { get; set; }
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Like> Likes { get; set; }
@@ -28,10 +22,7 @@ public class BlogDbContext : IdentityDbContext<User>
     {
         base.OnModelCreating(modelBuilder);
 
-        // Entity Configuration'ları apply et
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(BlogDbContext).Assembly);
-
-        // ASP.NET Identity table isimlerini özelleştir
         modelBuilder.Entity<User>().ToTable("Users");
         modelBuilder.Entity<Microsoft.AspNetCore.Identity.IdentityRole>().ToTable("Roles");
         modelBuilder.Entity<Microsoft.AspNetCore.Identity.IdentityUserRole<string>>().ToTable("UserRoles");
@@ -41,27 +32,17 @@ public class BlogDbContext : IdentityDbContext<User>
         modelBuilder.Entity<Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>>().ToTable("RoleClaims");
     }
 
-    /// <summary>
-    /// SaveChanges override - CreatedAt/UpdatedAt alanlarını otomatik güncelle
-    /// </summary>
     public override int SaveChanges()
     {
         UpdateTimestamps();
         return base.SaveChanges();
     }
 
-    /// <summary>
-    /// SaveChangesAsync override - CreatedAt/UpdatedAt alanlarını otomatik güncelle
-    /// </summary>
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         UpdateTimestamps();
         return await base.SaveChangesAsync(cancellationToken);
     }
-
-    /// <summary>
-    /// BaseEntity'den miras alan entity'lerin timestamp'lerini güncelle
-    /// </summary>
     private void UpdateTimestamps()
     {
         var entries = ChangeTracker.Entries()

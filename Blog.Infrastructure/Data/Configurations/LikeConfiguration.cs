@@ -4,10 +4,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Blog.Infrastructure.Data.Configurations;
 
-/// <summary>
-/// Like entity için EF Core configuration
-/// Post ve Comment beğenileri için ortak yapı
-/// </summary>
 public class LikeConfiguration : IEntityTypeConfiguration<Like>
 {
     public void Configure(EntityTypeBuilder<Like> builder)

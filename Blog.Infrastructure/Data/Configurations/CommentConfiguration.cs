@@ -4,10 +4,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Blog.Infrastructure.Data.Configurations;
 
-/// <summary>
-/// Comment entity için EF Core configuration
-/// Nested comments (self-referencing) destekler
-/// </summary>
 public class CommentConfiguration : IEntityTypeConfiguration<Comment>
 {
     public void Configure(EntityTypeBuilder<Comment> builder)

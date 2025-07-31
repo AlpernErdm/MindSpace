@@ -10,9 +10,6 @@ using System.Text;
 
 namespace Blog.Infrastructure.Services;
 
-/// <summary>
-/// JWT Token Service Implementation
-/// </summary>
 public class JwtTokenService : IJwtTokenService
 {
     private readonly IConfiguration _configuration;
@@ -39,7 +36,6 @@ public class JwtTokenService : IJwtTokenService
             new("IsVerified", user.IsVerified.ToString())
         };
 
-        // Add user roles
         var roles = await _userManager.GetRolesAsync(user);
         foreach (var role in roles)
         {

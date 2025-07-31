@@ -1,10 +1,6 @@
 using Blog.Domain.Entities;
 
 namespace Blog.Infrastructure.Data.SeedData;
-
-/// <summary>
-/// Post seed data - Her kategori için 5 yazı
-/// </summary>
 public static class PostSeedData
 {
     public static readonly PostTemplate[] PostTemplates = new[]

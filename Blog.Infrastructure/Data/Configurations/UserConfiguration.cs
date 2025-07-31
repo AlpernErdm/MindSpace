@@ -3,11 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Blog.Infrastructure.Data.Configurations;
-
-/// <summary>
-/// User entity için EF Core configuration
-/// ASP.NET Identity ekstra alanları
-/// </summary>
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)

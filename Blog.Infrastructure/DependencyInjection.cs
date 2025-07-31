@@ -9,9 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Blog.Infrastructure;
 
-/// <summary>
-/// Infrastructure layer için DI registration
-/// </summary>
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)

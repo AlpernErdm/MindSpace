@@ -5,9 +5,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Infrastructure.Repositories;
 
-/// <summary>
-/// User Repository Implementation - ASP.NET Identity ve Medium profil operasyonları
-/// </summary>
 public class UserRepository : Repository<User>, IUserRepository
 {
     public UserRepository(BlogDbContext context) : base(context)

@@ -7,9 +7,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Blog.Infrastructure.Services;
 
-/// <summary>
-/// Notification service implementation - Real-time bildirimler
-/// </summary>
 public class NotificationService : INotificationService
 {
     private readonly IUnitOfWork _unitOfWork;
@@ -57,7 +54,6 @@ public class NotificationService : INotificationService
         await _unitOfWork.Notifications.AddAsync(notification);
         await _unitOfWork.SaveChangesAsync();
 
-        // Real-time gönder
         await SendRealTimeNotificationAsync(userId, notification);
 
         _logger.LogInformation("Notification created for user {UserId}: {Title}", userId, title);
@@ -77,8 +73,7 @@ public class NotificationService : INotificationService
             _unitOfWork.Notifications.Update(notification);
             await _unitOfWork.SaveChangesAsync();
 
-                    // Real-time update gönder
-        await _hubService.SendNotificationReadToUserAsync(userId, notificationId);
+            await _hubService.SendNotificationReadToUserAsync(userId, notificationId);
 
             _logger.LogInformation("Notification {NotificationId} marked as read by user {UserId}", 
                 notificationId, userId);
@@ -99,7 +94,6 @@ public class NotificationService : INotificationService
 
         await _unitOfWork.SaveChangesAsync();
 
-        // Real-time update gönder
         await _hubService.SendAllNotificationsReadToUserAsync(userId);
 
         _logger.LogInformation("All notifications marked as read for user {UserId}", userId);
@@ -163,7 +157,6 @@ public class NotificationService : INotificationService
 
     public async Task SendPostLikedNotificationAsync(Guid postId, string likerUserId, string postAuthorId)
     {
-        // Kendi postunu beğenen kişiye bildirim gönderme
         if (likerUserId == postAuthorId) return;
 
         var post = await _unitOfWork.Posts.GetByIdAsync(postId);
@@ -171,7 +164,6 @@ public class NotificationService : INotificationService
 
         if (post != null && liker != null)
         {
-            // 1. Database'e kaydet ve real-time gönder
             await CreateNotificationAsync(
                 userId: postAuthorId,
                 title: "Post Beğenildi",
@@ -182,7 +174,6 @@ public class NotificationService : INotificationService
                 postId: postId
             );
 
-            // 2. RabbitMQ'ya message gönder (email, push notifications vs. için)
             var message = new PostLikedMessage
             {
                 UserId = postAuthorId,
@@ -202,7 +193,6 @@ public class NotificationService : INotificationService
 
     public async Task SendNewCommentNotificationAsync(Guid postId, Guid commentId, string commenterUserId, string postAuthorId)
     {
-        // Kendi postuna yorum yapan kişiye bildirim gönderme
         if (commenterUserId == postAuthorId) return;
 
         var post = await _unitOfWork.Posts.GetByIdAsync(postId);
@@ -210,7 +200,6 @@ public class NotificationService : INotificationService
 
         if (post != null && commenter != null)
         {
-            // 1. Database'e kaydet ve real-time gönder
             await CreateNotificationAsync(
                 userId: postAuthorId,
                 title: "Yeni Yorum",
@@ -222,7 +211,6 @@ public class NotificationService : INotificationService
                 commentId: commentId
             );
 
-            // 2. RabbitMQ'ya message gönder
             var message = new NewCommentMessage
             {
                 UserId = postAuthorId,
@@ -234,7 +222,7 @@ public class NotificationService : INotificationService
                 PostAuthorId = postAuthorId,
                 CommenterUserId = commenterUserId,
                 CommenterUserName = commenter.UserName,
-                CommentContent = "Yorum içeriği" // TODO: Actual comment content
+                CommentContent = "Yorum içeriği"
             };
 
             await _messagePublisher.PublishNotificationAsync(message);
@@ -266,7 +254,6 @@ public class NotificationService : INotificationService
 
         if (post != null && author != null)
         {
-            // Yazarın takipçilerini al
             var followers = await _unitOfWork.UserFollows.FindAsync(uf => uf.FollowingId == authorId);
 
             foreach (var follower in followers)
@@ -290,9 +277,6 @@ public class NotificationService : INotificationService
 
     #region Private Methods
 
-    /// <summary>
-    /// Real-time notification gönder
-    /// </summary>
     private async Task SendRealTimeNotificationAsync(string userId, Notification notification)
     {
         var notificationData = new

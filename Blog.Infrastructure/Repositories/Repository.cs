@@ -4,11 +4,6 @@ using Blog.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Infrastructure.Repositories;
-
-/// <summary>
-/// Generic Repository Implementation - EF Core ile
-/// </summary>
-/// <typeparam name="T">Entity type</typeparam>
 public class Repository<T> : IRepository<T> where T : class
 {
     protected readonly BlogDbContext _context;

@@ -2,14 +2,10 @@ using Blog.Domain.Entities;
 
 namespace Blog.Infrastructure.Data.SeedData;
 
-/// <summary>
-/// Category seed data - Her kategori için 5 detaylı seed data
-/// </summary>
 public static class CategorySeedData
 {
     public static readonly Category[] Categories = new[]
     {
-        // Teknoloji Kategorisi - 5 seed data
         new Category 
         { 
             Name = "Teknoloji", 

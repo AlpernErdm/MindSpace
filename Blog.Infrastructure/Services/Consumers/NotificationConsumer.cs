@@ -8,9 +8,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Blog.Infrastructure.Services.Consumers;
 
-/// <summary>
-/// Notification messages consumer - Background service
-/// </summary>
 public class NotificationConsumer : BackgroundService
 {
     private readonly IServiceProvider _serviceProvider;
@@ -26,18 +23,14 @@ public class NotificationConsumer : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _logger.LogInformation("🎯 NotificationConsumer started");
+        _logger.LogInformation("🏯 NotificationConsumer started");
 
-        // Simulating message consumption from RabbitMQ
-        // TODO: MassTransit actual consumer implementation
         while (!stoppingToken.IsCancellationRequested)
         {
             try
             {
-                // Simulate waiting for messages
                 await Task.Delay(5000, stoppingToken);
                 
-                // Log that we're actively listening
                 if (_logger.IsEnabled(LogLevel.Debug))
                 {
                     _logger.LogDebug("📡 NotificationConsumer listening for messages...");
@@ -51,14 +44,11 @@ public class NotificationConsumer : BackgroundService
             catch (Exception ex)
             {
                 _logger.LogError(ex, "❌ Error in NotificationConsumer");
-                await Task.Delay(1000, stoppingToken); // Wait before retry
+                await Task.Delay(1000, stoppingToken); 
             }
         }
     }
 
-    /// <summary>
-    /// Process PostLikedMessage
-    /// </summary>
     public async Task HandlePostLikedAsync(PostLikedMessage message)
     {
         try
@@ -70,7 +60,6 @@ public class NotificationConsumer : BackgroundService
             _logger.LogInformation("📨 Processing PostLikedMessage: {PostId} liked by {LikerUserId}", 
                 message.PostId, message.LikerUserId);
 
-            // Create in-app notification
             await notificationService.CreateNotificationAsync(
                 userId: message.PostAuthorId,
                 title: "Post Beğenildi",
@@ -90,9 +79,6 @@ public class NotificationConsumer : BackgroundService
         }
     }
 
-    /// <summary>
-    /// Process NewCommentMessage
-    /// </summary>
     public async Task HandleNewCommentAsync(NewCommentMessage message)
     {
         try
@@ -103,7 +89,6 @@ public class NotificationConsumer : BackgroundService
             _logger.LogInformation("📨 Processing NewCommentMessage: Comment {CommentId} on post {PostId}", 
                 message.CommentId, message.PostId);
 
-            // Create in-app notification
             await notificationService.CreateNotificationAsync(
                 userId: message.PostAuthorId,
                 title: "Yeni Yorum",
@@ -124,9 +109,6 @@ public class NotificationConsumer : BackgroundService
         }
     }
 
-    /// <summary>
-    /// Process PostPublishedMessage
-    /// </summary>
     public async Task HandlePostPublishedAsync(PostPublishedMessage message)
     {
         try
@@ -137,7 +119,6 @@ public class NotificationConsumer : BackgroundService
             _logger.LogInformation("📨 Processing PostPublishedMessage: Post {PostId} by {AuthorName}", 
                 message.PostId, message.AuthorName);
 
-            // Send notifications to all followers
             foreach (var followerId in message.FollowerIds)
             {
                 await notificationService.CreateNotificationAsync(

@@ -3,11 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Blog.Infrastructure.Data.Configurations;
-
-/// <summary>
-/// Post entity için EF Core configuration
-/// Medium benzeri blog post yapılandırması
-/// </summary>
 public class PostConfiguration : IEntityTypeConfiguration<Post>
 {
     public void Configure(EntityTypeBuilder<Post> builder)

@@ -7,9 +7,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Blog.Infrastructure.Data.SeedData;
 
-/// <summary>
-/// Database seeder service - Tüm entityler için test verileri
-/// </summary>
 public class DatabaseSeeder
 {
     private readonly BlogDbContext _context;

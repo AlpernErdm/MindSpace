@@ -4,10 +4,6 @@ using Blog.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Infrastructure.Repositories;
-
-/// <summary>
-/// Post Repository Implementation - Blog yazıları için özel operasyonlar
-/// </summary>
 public class PostRepository : Repository<Post>, IPostRepository
 {
     public PostRepository(BlogDbContext context) : base(context)

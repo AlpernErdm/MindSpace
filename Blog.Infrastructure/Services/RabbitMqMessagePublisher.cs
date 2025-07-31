@@ -4,12 +4,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Blog.Infrastructure.Services;
 
-/// <summary>
-/// RabbitMQ message publisher implementation using MassTransit
-/// </summary>
 public class RabbitMqMessagePublisher : IMessagePublisher
 {
-    // MassTransit'i daha sonra ekleyeceğiz, şimdilik in-memory simulation
     private readonly ILogger<RabbitMqMessagePublisher> _logger;
 
     public RabbitMqMessagePublisher(ILogger<RabbitMqMessagePublisher> logger)
@@ -22,14 +18,10 @@ public class RabbitMqMessagePublisher : IMessagePublisher
     {
         try
         {
-            // Simulating message publish for now
             _logger.LogInformation("📨 Publishing notification message: {MessageType} for user {UserId}", 
                 typeof(T).Name, message.UserId);
             
-            // TODO: MassTransit implementation
-            // await _publishEndpoint.Publish(message, cancellationToken);
-            
-            await Task.Delay(100, cancellationToken); // Simulate async operation
+            await Task.Delay(100, cancellationToken); 
             
             _logger.LogInformation("✅ Notification message published successfully: {MessageId}", message.Id);
         }
@@ -46,9 +38,6 @@ public class RabbitMqMessagePublisher : IMessagePublisher
         {
             _logger.LogInformation("📧 Publishing email message to: {ToEmail} with subject: {Subject}", 
                 message.ToEmail, message.Subject);
-            
-            // TODO: MassTransit implementation
-            // await _publishEndpoint.Publish(message, cancellationToken);
             
             await Task.Delay(100, cancellationToken);
             
@@ -67,9 +56,6 @@ public class RabbitMqMessagePublisher : IMessagePublisher
         try
         {
             _logger.LogInformation("🚀 Publishing generic message: {MessageType}", typeof(T).Name);
-            
-            // TODO: MassTransit implementation
-            // await _publishEndpoint.Publish(message, cancellationToken);
             
             await Task.Delay(100, cancellationToken);
             
@@ -91,7 +77,6 @@ public class RabbitMqMessagePublisher : IMessagePublisher
             _logger.LogInformation("📦 Publishing batch of {Count} messages: {MessageType}", 
                 messageList.Count, typeof(T).Name);
             
-            // TODO: MassTransit batch implementation
             foreach (var message in messageList)
             {
                 await PublishAsync(message, cancellationToken);

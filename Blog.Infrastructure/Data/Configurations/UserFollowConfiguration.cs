@@ -3,10 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Blog.Infrastructure.Data.Configurations;
-
-/// <summary>
-/// UserFollow junction table configuration - Many-to-Many user follow sistemi
-/// </summary>
 public class UserFollowConfiguration : IEntityTypeConfiguration<UserFollow>
 {
     public void Configure(EntityTypeBuilder<UserFollow> builder)

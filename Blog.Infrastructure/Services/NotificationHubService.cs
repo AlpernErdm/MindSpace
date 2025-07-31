@@ -5,9 +5,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Blog.Infrastructure.Services;
 
-/// <summary>
-/// SignalR Hub operations implementation
-/// </summary>
 public class NotificationHubService : INotificationHubService
 {
     private readonly IHubContext<NotificationHub> _hubContext;
