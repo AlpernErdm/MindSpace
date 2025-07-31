@@ -466,4 +466,4 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-⭐ Bu projeyi beğendiyseniz yıldız vermeyi unutmayın! 
+⭐ Bu projeyi beğendiyseniz yıldız vermeyi unutmayın!
