@@ -1,8 +1,5 @@
 namespace Blog.Application.Common.Messages;
 
-/// <summary>
-/// Yeni yorum bildirim mesajı
-/// </summary>
 public record NewCommentMessage : INotificationMessage
 {
     public Guid Id { get; init; } = Guid.NewGuid();

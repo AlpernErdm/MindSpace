@@ -1,8 +1,6 @@
 namespace Blog.Application.Common.Interfaces;
 
-/// <summary>
-/// Unit of Work Pattern - Transaction management ve repository koordinasyonu
-/// </summary>
+
 public interface IUnitOfWork : IDisposable
 {
     // Repositories

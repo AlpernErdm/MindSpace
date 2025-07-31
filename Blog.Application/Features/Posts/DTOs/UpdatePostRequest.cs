@@ -2,10 +2,6 @@ using System.ComponentModel.DataAnnotations;
 using Blog.Domain.Entities;
 
 namespace Blog.Application.Features.Posts.DTOs;
-
-/// <summary>
-/// Post güncelleme request DTO'su
-/// </summary>
 public class UpdatePostRequest
 {
     [Required(ErrorMessage = "Başlık gereklidir")]

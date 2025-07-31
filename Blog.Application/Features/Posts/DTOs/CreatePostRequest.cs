@@ -3,9 +3,7 @@ using Blog.Domain.Entities;
 
 namespace Blog.Application.Features.Posts.DTOs;
 
-/// <summary>
-/// Yeni post oluşturma request DTO'su
-/// </summary>
+
 public class CreatePostRequest
 {
     [Required(ErrorMessage = "Başlık gereklidir")]

@@ -2,9 +2,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Blog.Application.Features.Authentication.DTOs;
 
-/// <summary>
-/// Kullanıcı kayıt işlemi için DTO
-/// </summary>
 public class RegisterRequest
 {
     [Required(ErrorMessage = "Email alanı zorunludur")]

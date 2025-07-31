@@ -2,10 +2,6 @@ using System.Linq.Expressions;
 
 namespace Blog.Application.Common.Interfaces;
 
-/// <summary>
-/// Generic Repository Pattern - Tüm entity'ler için ortak CRUD operasyonları
-/// </summary>
-/// <typeparam name="T">Entity type</typeparam>
 public interface IRepository<T> where T : class
 {
     // Query Operations

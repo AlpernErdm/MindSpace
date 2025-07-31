@@ -8,9 +8,6 @@ using System.Text.RegularExpressions;
 
 namespace Blog.Application.Features.Posts.Services;
 
-/// <summary>
-/// Post işlemleri business logic implementation
-/// </summary>
 public class PostService : IPostService
 {
     private readonly IUnitOfWork _unitOfWork;

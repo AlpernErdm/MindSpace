@@ -2,9 +2,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Blog.Application.Features.Authentication.DTOs;
 
-/// <summary>
-/// Kullanıcı giriş işlemi için DTO
-/// </summary>
 public class LoginRequest
 {
     [Required(ErrorMessage = "Email veya kullanıcı adı zorunludur")]

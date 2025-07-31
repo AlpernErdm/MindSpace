@@ -3,9 +3,6 @@ using Blog.Application.Features.Authentication.DTOs;
 
 namespace Blog.Application.Features.Posts.DTOs;
 
-/// <summary>
-/// Post response DTO'su - API'den dönen post verisi
-/// </summary>
 public class PostResponse
 {
     public Guid Id { get; set; }
@@ -35,9 +32,6 @@ public class PostResponse
     public List<TagResponse> Tags { get; set; } = new List<TagResponse>();
 }
 
-/// <summary>
-/// Basit kategori bilgisi
-/// </summary>
 public class CategoryResponse
 {
     public Guid Id { get; set; }
@@ -46,9 +40,6 @@ public class CategoryResponse
     public string? Color { get; set; }
 }
 
-/// <summary>
-/// Basit tag bilgisi
-/// </summary>
 public class TagResponse
 {
     public Guid Id { get; set; }

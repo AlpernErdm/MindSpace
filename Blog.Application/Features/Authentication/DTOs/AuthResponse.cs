@@ -1,8 +1,5 @@
 namespace Blog.Application.Features.Authentication.DTOs;
 
-/// <summary>
-/// Authentication işlemi response DTO
-/// </summary>
 public class AuthResponse
 {
     public bool Success { get; set; }
@@ -14,9 +11,6 @@ public class AuthResponse
     public List<string> Errors { get; set; } = new();
 }
 
-/// <summary>
-/// Kullanıcı bilgileri DTO
-/// </summary>
 public class UserDto
 {
     public string Id { get; set; } = string.Empty;

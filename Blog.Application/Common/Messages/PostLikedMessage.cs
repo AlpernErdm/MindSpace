@@ -1,8 +1,5 @@
 namespace Blog.Application.Common.Messages;
 
-/// <summary>
-/// Post beğenildi bildirim mesajı
-/// </summary>
 public record PostLikedMessage : INotificationMessage
 {
     public Guid Id { get; init; } = Guid.NewGuid();

@@ -1,8 +1,5 @@
 namespace Blog.Application.Common.Messages;
 
-/// <summary>
-/// Base interface for all notification messages
-/// </summary>
 public interface INotificationMessage
 {
     Guid Id { get; }

@@ -1,8 +1,5 @@
 namespace Blog.Application.Common.Messages;
 
-/// <summary>
-/// Post yayınlandı bildirim mesajı
-/// </summary>
 public record PostPublishedMessage : INotificationMessage
 {
     public Guid Id { get; init; } = Guid.NewGuid();

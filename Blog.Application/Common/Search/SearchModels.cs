@@ -1,8 +1,5 @@
 namespace Blog.Application.Common.Search;
 
-/// <summary>
-/// Elasticsearch post search document
-/// </summary>
 public class PostSearchDocument
 {
     public Guid Id { get; set; }
@@ -29,9 +26,6 @@ public class PostSearchDocument
     public string? FeaturedImageUrl { get; set; }
 }
 
-/// <summary>
-/// Search request model
-/// </summary>
 public class SearchRequest
 {
     public string Query { get; set; } = string.Empty;
@@ -49,9 +43,6 @@ public class SearchRequest
     public bool HighlightResults { get; set; } = true;
 }
 
-/// <summary>
-/// Search response model
-/// </summary>
 public class SearchResponse
 {
     public List<PostSearchResult> Results { get; set; } = new();
@@ -64,9 +55,6 @@ public class SearchResponse
     public List<string> Suggestions { get; set; } = new();
 }
 
-/// <summary>
-/// Individual search result
-/// </summary>
 public class PostSearchResult
 {
     public Guid Id { get; set; }
@@ -88,9 +76,6 @@ public class PostSearchResult
     public Dictionary<string, List<string>> Highlights { get; set; } = new();
 }
 
-/// <summary>
-/// Search aggregations (facets)
-/// </summary>
 public class SearchAggregations
 {
     public Dictionary<string, long> Categories { get; set; } = new();
@@ -100,9 +85,6 @@ public class SearchAggregations
     public Dictionary<string, long> ReadTimeRanges { get; set; } = new();
 }
 
-/// <summary>
-/// Auto-complete suggestion
-/// </summary>
 public class SearchSuggestion
 {
     public string Text { get; set; } = string.Empty;
@@ -110,9 +92,6 @@ public class SearchSuggestion
     public string Type { get; set; } = string.Empty; // title, tag, author, category
 }
 
-/// <summary>
-/// Search sort options
-/// </summary>
 public enum SearchSortBy
 {
     Relevance,
@@ -127,18 +106,12 @@ public enum SearchSortBy
     AuthorName
 }
 
-/// <summary>
-/// Search sort order
-/// </summary>
 public enum SearchSortOrder
 {
     Ascending,
     Descending
 }
 
-/// <summary>
-/// Popular search analytics
-/// </summary>
 public class PopularSearch
 {
     public string Query { get; set; } = string.Empty;

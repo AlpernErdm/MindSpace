@@ -1,8 +1,5 @@
 namespace Blog.Application.Common.Messages;
 
-/// <summary>
-/// Email bildirim mesajı
-/// </summary>
 public record EmailNotificationMessage
 {
     public Guid Id { get; init; } = Guid.NewGuid();

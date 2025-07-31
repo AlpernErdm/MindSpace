@@ -6,9 +6,6 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Blog.Application.Features.Authentication.Services;
 
-/// <summary>
-/// Authentication Service Implementation
-/// </summary>
 public class AuthService : IAuthService
 {
     private readonly UserManager<User> _userManager;
@@ -30,7 +27,6 @@ public class AuthService : IAuthService
 
     public async Task<AuthResponse> RegisterAsync(RegisterRequest request)
     {
-        // Email kontrolü
         if (await _unitOfWork.Users.IsEmailExistsAsync(request.Email))
         {
             return new AuthResponse
@@ -41,7 +37,6 @@ public class AuthService : IAuthService
             };
         }
 
-        // Username kontrolü
         if (await _unitOfWork.Users.IsUserNameExistsAsync(request.UserName))
         {
             return new AuthResponse
@@ -52,7 +47,6 @@ public class AuthService : IAuthService
             };
         }
 
-        // Yeni kullanıcı oluştur
         var user = new User
         {
             UserName = request.UserName,
@@ -60,7 +54,7 @@ public class AuthService : IAuthService
             FirstName = request.FirstName,
             LastName = request.LastName,
             JoinDate = DateTime.UtcNow,
-            EmailConfirmed = true // Development için, production'da email doğrulama gerekebilir
+            EmailConfirmed = true
         };
 
         var result = await _userManager.CreateAsync(user, request.Password);
@@ -75,10 +69,8 @@ public class AuthService : IAuthService
             };
         }
 
-        // Yeni kullanıcılara otomatik "Author" rolü ata
         await _userManager.AddToRoleAsync(user, "Author");
 
-        // JWT token oluştur
         var token = await _jwtTokenService.GenerateTokenAsync(user);
         var refreshToken = await _jwtTokenService.GenerateRefreshTokenAsync();
 
@@ -97,7 +89,6 @@ public class AuthService : IAuthService
     {
         User? user = null;
 
-        // Email veya username ile kullanıcı bul
         if (request.EmailOrUserName.Contains("@"))
         {
             user = await _userManager.FindByEmailAsync(request.EmailOrUserName);
@@ -117,7 +108,6 @@ public class AuthService : IAuthService
             };
         }
 
-        // Şifre kontrolü
         var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 
         if (!result.Succeeded)
@@ -130,7 +120,6 @@ public class AuthService : IAuthService
             };
         }
 
-        // JWT token oluştur
         var token = await _jwtTokenService.GenerateTokenAsync(user);
         var refreshToken = await _jwtTokenService.GenerateRefreshTokenAsync();
 
@@ -180,7 +169,6 @@ public class AuthService : IAuthService
             };
         }
 
-        // Yeni token oluştur
         var newToken = await _jwtTokenService.GenerateTokenAsync(user);
         var newRefreshToken = await _jwtTokenService.GenerateRefreshTokenAsync();
 
@@ -197,27 +185,23 @@ public class AuthService : IAuthService
 
     public async Task<bool> LogoutAsync(string userId)
     {
-        // Token blacklist functionality buraya eklenebilir
-        await Task.Delay(1); // Placeholder
+        await Task.Delay(1);
         return true;
     }
 
     public async Task<bool> RevokeTokenAsync(string token)
     {
-        // Token revocation logic buraya eklenebilir
-        await Task.Delay(1); // Placeholder
+        await Task.Delay(1);
         return true;
     }
 
     public async Task<UserDto?> GetCurrentUserAsync(string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
-        
         if (user == null)
         {
             return null;
         }
-
         return MapToUserDto(user);
     }
 

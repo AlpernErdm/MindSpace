@@ -2,9 +2,6 @@ using Blog.Application.Features.Authentication.DTOs;
 
 namespace Blog.Application.Features.Authentication.Interfaces;
 
-/// <summary>
-/// Authentication Service Interface
-/// </summary>
 public interface IAuthService
 {
     Task<AuthResponse> RegisterAsync(RegisterRequest request);

@@ -2,9 +2,7 @@ using Blog.Domain.Entities;
 
 namespace Blog.Application.Common.Interfaces;
 
-/// <summary>
-/// User repository - Identity ve Medium profil operasyonları
-/// </summary>
+
 public interface IUserRepository : IRepository<User>
 {
     Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken = default);
