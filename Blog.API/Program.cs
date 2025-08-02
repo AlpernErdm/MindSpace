@@ -141,6 +141,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// Static files middleware for uploaded images
+app.UseStaticFiles();
+
 app.UseCors("AllowReactClient");
 
 app.UseAuthentication();

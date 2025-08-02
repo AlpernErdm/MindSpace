@@ -65,7 +65,7 @@ public class NotificationConsumer : BackgroundService
                 title: "Post Beğenildi",
                 message: $"{message.LikerUserName} postunuzu beğendi: {message.PostTitle}",
                 type: NotificationType.PostLiked,
-                actionUrl: $"/posts/{message.PostId}",
+                actionUrl: $"/post/{message.PostId}",
                 actorId: message.LikerUserId,
                 postId: message.PostId
             );
@@ -94,7 +94,7 @@ public class NotificationConsumer : BackgroundService
                 title: "Yeni Yorum",
                 message: $"{message.CommenterUserName} postunuza yorum yaptı: {message.PostTitle}",
                 type: NotificationType.NewComment,
-                actionUrl: $"/posts/{message.PostId}#comment-{message.CommentId}",
+                actionUrl: $"/post/{message.PostId}",
                 actorId: message.CommenterUserId,
                 postId: message.PostId,
                 commentId: message.CommentId
@@ -126,7 +126,7 @@ public class NotificationConsumer : BackgroundService
                     title: "Yeni Post",
                     message: $"{message.AuthorName} yeni bir post yayınladı: {message.PostTitle}",
                     type: NotificationType.PostPublished,
-                    actionUrl: $"/posts/{message.PostSlug}",
+                    actionUrl: $"/post/{message.PostSlug}",
                     actorId: message.AuthorId,
                     postId: message.PostId
                 );

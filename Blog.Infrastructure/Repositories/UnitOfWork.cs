@@ -21,6 +21,7 @@ public class UnitOfWork : IUnitOfWork
     private IRepository<PostTag>? _postTags;
     private IRepository<UserFollow>? _userFollows;
     private IRepository<Notification>? _notifications;
+    private IRepository<Bookmark>? _bookmarks;
 
     public UnitOfWork(BlogDbContext context)
     {
@@ -37,6 +38,7 @@ public class UnitOfWork : IUnitOfWork
     public IRepository<PostTag> PostTags => _postTags ??= new Repository<PostTag>(_context);
     public IRepository<UserFollow> UserFollows => _userFollows ??= new Repository<UserFollow>(_context);
     public IRepository<Notification> Notifications => _notifications ??= new Repository<Notification>(_context);
+    public IRepository<Bookmark> Bookmarks => _bookmarks ??= new Repository<Bookmark>(_context);
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

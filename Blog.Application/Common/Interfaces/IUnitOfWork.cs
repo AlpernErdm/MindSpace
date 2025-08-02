@@ -13,6 +13,7 @@ public interface IUnitOfWork : IDisposable
     IRepository<Blog.Domain.Entities.PostTag> PostTags { get; }
     IRepository<Blog.Domain.Entities.UserFollow> UserFollows { get; }
     IRepository<Blog.Domain.Entities.Notification> Notifications { get; }
+    IRepository<Blog.Domain.Entities.Bookmark> Bookmarks { get; }
 
     // Transaction operations
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

@@ -22,7 +22,6 @@ public class CreatePostRequest
     [Required]
     public PostStatus Status { get; set; } = PostStatus.Draft;
 
-    [Range(1, int.MaxValue, ErrorMessage = "Geçerli bir kategori seçiniz")]
     public Guid? CategoryId { get; set; }
 
     public List<string> Tags { get; set; } = new List<string>();

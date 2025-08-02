@@ -32,7 +32,9 @@ public class PostsController : ControllerBase
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
+                _logger.LogWarning("Model validation failed: {Errors}", string.Join(", ", errors));
+                return BadRequest(new { Errors = errors });
             }
 
             var userId = GetCurrentUserId();
