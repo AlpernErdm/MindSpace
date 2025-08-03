@@ -169,7 +169,7 @@ public class NotificationService : INotificationService
                 title: "Post Beğenildi",
                 message: $"{liker.UserName} postunuzu beğendi: {post.Title}",
                 type: NotificationType.PostLiked,
-                actionUrl: $"/posts/{post.Slug}",
+                actionUrl: $"/post/{post.Slug}",
                 actorId: likerUserId,
                 postId: postId
             );
@@ -205,7 +205,7 @@ public class NotificationService : INotificationService
                 title: "Yeni Yorum",
                 message: $"{commenter.UserName} postunuza yorum yaptı: {post.Title}",
                 type: NotificationType.NewComment,
-                actionUrl: $"/posts/{post.Slug}#comment-{commentId}",
+                actionUrl: $"/post/{post.Slug}",
                 actorId: commenterUserId,
                 postId: postId,
                 commentId: commentId
@@ -263,7 +263,7 @@ public class NotificationService : INotificationService
                     title: "Yeni Post",
                     message: $"{author.UserName} yeni bir post yayınladı: {post.Title}",
                     type: NotificationType.PostPublished,
-                    actionUrl: $"/posts/{post.Slug}",
+                    actionUrl: $"/post/{post.Slug}",
                     actorId: authorId,
                     postId: postId
                 );

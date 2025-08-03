@@ -17,6 +17,7 @@ public class BlogDbContext : IdentityDbContext<User>
     public DbSet<PostTag> PostTags { get; set; }
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<UserFollow> UserFollows { get; set; }
+    public DbSet<Bookmark> Bookmarks { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
